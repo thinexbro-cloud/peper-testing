@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>5 වසර දහම් දැනුම - Daily Dose Paper 27</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans Sinhala', sans-serif;
+            background-color: #f0fdfa; /* Teal 50 - Ocean Base */
+            color: #0c4a6e; /* Sky 900 */
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+        .option-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            touch-action: manipulation;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .option-btn:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+        input[type="text"], input[type="password"], textarea, select {
+            font-size: 16px !important;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #0ea5e9; /* Sky 500 */
+            border-radius: 10px;
+        }
+        .modal-scroll {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .glass-panel {
+            background: rgba(240, 253, 250, 0.9);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(14, 165, 233, 0.3); /* Sky border */
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Floating Ocean Animations */
+        @keyframes float1 {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(8deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float2 {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1) rotate(-6deg); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+        @keyframes float3 {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(-12deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float-1 { animation: float1 4s ease-in-out infinite; }
+        .animate-float-2 { animation: float2 5s ease-in-out infinite reverse; }
+        .animate-float-3 { animation: float3 6s ease-in-out infinite; }
+        
+        /* Ocean Wave Background effect */
+        .ocean-bg {
+            background-image: 
+                radial-gradient(3px 3px at 20px 30px, rgba(14, 165, 233, 0.3), rgba(0,0,0,0)), /* Sky */
+                radial-gradient(4px 4px at 40px 70px, rgba(20, 184, 166, 0.2), rgba(0,0,0,0)), /* Teal */
+                radial-gradient(2.5px 2.5px at 50px 160px, rgba(14, 165, 233, 0.3), rgba(0,0,0,0)),
+                radial-gradient(3.5px 3.5px at 90px 40px, rgba(20, 184, 166, 0.3), rgba(0,0,0,0)),
+                radial-gradient(2.5px 2.5px at 130px 80px, rgba(14, 165, 233, 0.2), rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 160px 120px, rgba(20, 184, 166, 0.2), rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: ocean-anim 80s linear infinite;
+        }
+        @keyframes ocean-anim {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 500px; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-sky-400 selection:text-white ocean-bg">
+
+    <header class="glass-panel p-3 md:p-4 shadow-sm sticky top-0 z-40 border-b border-teal-200">
+        <div class="max-w-4xl mx-auto flex justify-between items-center px-2">
+            <h1 class="text-[14px] md:text-2xl font-black flex items-center gap-2 text-sky-900">
+                <span class="text-sky-500 text-lg md:text-3xl animate-pulse">🌊</span> 5 වසර දහම් දැනුම - Daily Dose Paper 27
+            </h1>
+            <div id="score-board" class="hidden bg-sky-100 text-sky-800 px-4 py-1.5 md:py-2 rounded-full font-black text-sm md:text-xl shadow-inner border border-sky-300">
+                ලකුණු: <span id="score">0</span> / 40
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-3 md:p-4 my-2 md:my-6 relative">
+        
+        <!-- Welcome Screen -->
+        <div id="view-welcome" class="bg-white/95 backdrop-blur-md p-6 md:p-10 rounded-[2.5rem] shadow-2xl max-w-lg mx-auto mt-6 md:mt-12 text-center border-4 border-sky-400 relative overflow-visible z-10">
+            <!-- Floating Decorative Icons -->
+            <div class="absolute -left-6 -top-6 text-5xl md:text-6xl animate-float-1 z-20 drop-shadow-md">🐬</div>
+            <div class="absolute -right-4 top-20 text-4xl md:text-5xl animate-float-2 z-20 drop-shadow-md">🐚</div>
+            <div class="absolute left-10 -bottom-8 text-5xl md:text-6xl animate-float-1 z-20 delay-1000 drop-shadow-md">🌊</div>
+            <div class="absolute right-8 -bottom-4 text-4xl md:text-5xl animate-float-3 z-20 drop-shadow-md">⚓</div>
+
+            <div class="relative z-10 pt-4">
+                <div class="text-6xl md:text-7xl mb-4 animate-bounce drop-shadow-md">🏆</div>
+                <h2 class="text-2xl md:text-4xl font-black text-sky-900 mb-6">Paper 27</h2>
+                
+                <!-- Tagline Only -->
+                <p class="text-[12px] md:text-sm font-black text-teal-700 mb-8 bg-teal-50 border border-teal-200 py-3 rounded-xl inline-block px-6 shadow-sm uppercase tracking-wider">
+                    දවසට එක ගානේ ගත්තම, විභාගෙදි අතුරු ආබාධ නෑ!
+                </p>
+                
+                <input type="text" id="student-name" placeholder="ඔබේ නම (උදා: සෙනුදි)" class="w-full bg-slate-50 border-2 border-sky-300 rounded-2xl p-4 md:p-5 focus:outline-none focus:border-teal-500 mb-6 text-center font-black text-sky-900 placeholder-slate-400 transition-all shadow-inner text-lg">
+                
+                <button id="btn-start-quiz" class="w-full bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-400 hover:to-teal-400 text-white font-black text-base md:text-xl py-4 md:py-5 rounded-2xl shadow-[0_5px_15px_rgba(14,165,233,0.4)] transition-all transform active:scale-95 uppercase tracking-wide border-b-4 border-sky-700">
+                    පරීක්ෂණය පටන් ගමු 🌊
+                </button>
+
+                <div class="mt-8 pt-6 border-t border-sky-100">
+                    <button id="btn-show-teacher" class="text-[12px] md:text-sm text-sky-600 hover:text-teal-600 font-bold transition-colors py-2 px-4 rounded-xl hover:bg-sky-50">
+                        👨‍🏫 ගුරු පාලක පුවරුව
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-quiz" class="hidden">
+            <div class="bg-sky-100/80 backdrop-blur-sm border-l-4 border-teal-500 p-4 md:p-5 mb-6 md:mb-8 rounded-r-2xl shadow-sm flex items-start gap-3 md:gap-4">
+                <span class="text-2xl md:text-3xl animate-pulse">🎯</span>
+                <div>
+                    <p class="font-black text-teal-800 text-base md:text-lg">උපදෙස්:</p>
+                    <p class="text-[13px] md:text-sm mt-1 font-bold text-sky-950 leading-relaxed">නිවැරදි පිළිතුර තෝරන්න. ඔබ පිළිතුරක් දුන් වහාම එය නිවැරදිද වැරදිද යන්න සහ ඊට අදාළ සටහන (Note) ඔබට බලාගත හැක.</p>
+                </div>
+            </div>
+            
+            <div id="quiz-container" class="space-y-6 md:space-y-8 pb-10">
+            </div>
+        </div>
+
+        <!-- Completion Screen -->
+        <div id="view-completion" class="hidden mt-6 md:mt-10 bg-white/95 backdrop-blur-lg border-t-8 border-teal-500 p-6 md:p-10 rounded-[3rem] shadow-[0_10px_30px_rgba(20,184,166,0.2)] max-w-lg mx-auto text-center relative overflow-hidden">
+            <div class="absolute -left-4 -bottom-4 text-7xl md:text-9xl animate-float-2 opacity-10 text-sky-500">🏆</div>
+            <div class="relative z-10">
+                <div class="text-6xl md:text-7xl mb-4 md:mb-6 animate-bounce">✨</div>
+                <h2 class="text-3xl md:text-4xl font-black text-sky-900 mb-2">නියමයි!</h2>
+                <p class="text-[14px] md:text-base text-teal-800 mb-6 md:mb-8 font-bold">ඔබ විසිහත්වන අභියෝගයත් සාර්ථකව අවසන් කළා.</p>
+                
+                <div class="bg-gradient-to-br from-sky-50 to-teal-100 p-6 md:p-8 rounded-[2rem] mb-6 md:mb-8 shadow-inner border border-sky-200">
+                    <p class="text-sm md:text-base font-black text-teal-600 uppercase tracking-widest mb-1">ඔබේ ලකුණු</p>
+                    <p class="font-black text-6xl md:text-7xl text-sky-600 drop-shadow-sm"><span id="final-score"></span><span class="text-2xl md:text-4xl text-sky-400">/40</span></p>
+                </div>
+
+                <p id="save-status" class="text-xs md:text-sm font-bold text-sky-900 mb-6 md:mb-8 bg-sky-50 py-3 md:py-4 rounded-xl border border-sky-200">
+                    ⏳ ප්‍රතිඵල යවමින් පවතී...
+                </p>
+
+                <button id="btn-restart" class="w-full bg-gradient-to-r from-teal-500 to-sky-500 hover:from-teal-400 hover:to-sky-400 text-white font-black py-4 md:py-5 rounded-2xl transition duration-300 shadow-[0_5px_15px_rgba(14,165,233,0.4)] active:scale-95 uppercase tracking-wide border-b-4 border-teal-800">
+                    නැවත මුල් පිටුවට
+                </button>
+            </div>
+        </div>
+
+        <div id="view-teacher" class="hidden">
+            <div class="bg-white/95 backdrop-blur-md rounded-[2rem] shadow-2xl overflow-hidden border-t-8 border-sky-500 border border-sky-100">
+                <div class="bg-sky-50 p-5 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-sky-200 gap-4">
+                    <div>
+                        <h2 class="text-xl md:text-3xl font-black text-sky-900 flex items-center gap-3"><span>📋</span> ගුරු පාලක පුවරුව</h2>
+                        <p class="text-xs md:text-sm text-teal-800 mt-1.5 md:mt-2 font-bold">සිසුන්ගේ ප්‍රතිඵල පරීක්ෂාව සහ ප්‍රශ්න සංස්කරණය.</p>
+                    </div>
+                    <button id="btn-back-home" class="w-full md:w-auto bg-white border-2 border-sky-300 hover:bg-sky-100 text-sky-900 font-black py-3 px-6 md:px-8 rounded-xl transition shadow-sm active:scale-95">
+                        ආපසු යන්න
+                    </button>
+                </div>
+
+                <div class="flex flex-col md:flex-row border-b border-sky-200 bg-white text-sm md:text-base">
+                    <button id="tab-results" class="flex-1 py-4 font-black text-teal-600 border-b-4 border-teal-500 focus:outline-none transition bg-sky-50/50">📊 සිසුන්ගේ ප්‍රතිඵල</button>
+                    <button id="tab-edit" class="flex-1 py-4 font-bold text-slate-400 hover:text-sky-600 border-b-4 border-transparent focus:outline-none transition">✏️ ප්‍රශ්න සංස්කරණය</button>
+                </div>
+                
+                <!-- Results Table -->
+                <div id="section-results" class="table-container overflow-x-auto max-h-[600px] custom-scrollbar bg-slate-50">
+                    <table class="w-full text-left border-collapse min-w-max">
+                        <thead class="bg-sky-100 text-sky-900 sticky top-0 shadow-sm text-sm md:text-base">
+                            <tr>
+                                <th class="p-4 md:p-5 font-black border-b border-sky-200">සිසුවාගේ නම</th>
+                                <th class="p-4 md:p-5 font-black border-b border-sky-200 text-center">ලකුණු</th>
+                                <th class="p-4 md:p-5 font-black border-b border-sky-200">ආරම්භ කළ වේලාව</th>
+                                <th class="p-4 md:p-5 font-black border-b border-sky-200">අවසන් කළ වේලාව</th>
+                                <th class="p-4 md:p-5 font-black border-b border-sky-200 text-center">විස්තර</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacher-table-body" class="text-slate-700 text-sm md:text-base divide-y divide-sky-100 bg-white">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Edit Section -->
+                <div id="section-edit" class="hidden p-4 md:p-8 bg-slate-50 max-h-[600px] overflow-y-auto custom-scrollbar">
+                    <div id="edit-questions-list" class="space-y-3 md:space-y-4">
+                        <!-- Edit list populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Alert Modal -->
+    <div id="alert-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div class="bg-white border-2 border-sky-300 p-6 md:p-8 rounded-[2rem] shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform">
+            <div id="alert-icon" class="text-5xl mb-4 drop-shadow-sm">🔔</div>
+            <p id="alert-message" class="text-base md:text-lg text-slate-800 mb-6 md:mb-8 font-bold leading-relaxed"></p>
+            <button id="alert-close" class="bg-sky-500 hover:bg-sky-600 text-white font-black px-8 py-3.5 rounded-xl w-full transition shadow-md active:scale-95 text-base md:text-lg">හරි</button>
+        </div>
+    </div>
+
+    <!-- PIN Modal -->
+    <div id="pin-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div class="bg-white border-2 border-sky-300 p-6 md:p-8 rounded-[2rem] shadow-2xl max-w-sm w-full">
+            <h3 class="text-xl md:text-2xl font-black text-sky-900 mb-2">පාලක පුවරුව 🔒</h3>
+            <p class="mb-5 md:mb-6 text-[13px] md:text-sm text-slate-500 font-bold">ගුරුවරුන් සඳහා පමණි. PIN අංකය ඇතුළත් කරන්න.</p>
+            <input type="password" id="pin-input" placeholder="PIN" class="border-2 border-slate-200 bg-slate-50 rounded-xl p-4 w-full mb-3 text-center text-2xl md:text-3xl tracking-[0.5em] focus:outline-none focus:border-sky-500 font-black text-slate-800">
+            <p id="pin-error" class="text-red-500 text-xs md:text-sm hidden mb-5 md:mb-6 font-bold text-center bg-red-50 py-2 rounded-lg border border-red-200">මුරපදය වැරදියි!</p>
+            <div class="flex gap-3">
+                <button id="cancel-pin" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-4 py-3.5 rounded-xl transition w-1/2 text-sm md:text-base active:scale-95">අවලංගු</button>
+                <button id="submit-pin" class="bg-sky-600 hover:bg-sky-700 text-white font-black px-4 py-3.5 rounded-xl transition w-1/2 shadow-md text-sm md:text-base active:scale-95">ඇතුළත් වන්න</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Question Modal -->
+    <div id="edit-q-modal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-center justify-center z-50 p-3 md:p-4">
+        <div class="bg-white border-2 border-sky-300 p-5 md:p-8 rounded-[2rem] shadow-2xl w-full max-w-2xl modal-scroll custom-scrollbar border-t-8 border-teal-500">
+            <h3 class="text-lg md:text-2xl font-black text-sky-900 mb-4 md:mb-6 border-b border-slate-100 pb-4 flex justify-between items-center flex-wrap gap-2">
+                <span>ප්‍රශ්නය සංස්කරණය</span>
+                <span id="editing-q-number" class="bg-sky-100 text-sky-900 border border-sky-200 text-xs md:text-sm px-3 md:px-4 py-1.5 rounded-full font-bold"></span>
+            </h3>
+            
+            <div class="space-y-5 md:space-y-6">
+                <div>
+                    <label class="block text-[13px] md:text-sm font-bold text-slate-600 mb-2">✏️ ප්‍රශ්නය (HTML tags allowed for labels):</label>
+                    <textarea id="edit-q-text" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 md:p-4 text-sm md:text-base text-slate-800 focus:border-sky-500 focus:outline-none font-bold shadow-sm"></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-[13px] md:text-sm font-bold text-slate-600 mb-3">📝 විකල්ප පිළිතුරු 4:</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                        <div class="flex items-center gap-2 md:gap-3">
+                            <span class="font-black text-slate-400 w-6 text-sm">(i)</span>
+                            <input type="text" id="edit-opt-0" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm md:text-base text-slate-800 focus:border-sky-500 focus:outline-none font-semibold">
+                        </div>
+                        <div class="flex items-center gap-2 md:gap-3">
+                            <span class="font-black text-slate-400 w-6 text-sm">(ii)</span>
+                            <input type="text" id="edit-opt-1" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm md:text-base text-slate-800 focus:border-sky-500 focus:outline-none font-semibold">
+                        </div>
+                        <div class="flex items-center gap-2 md:gap-3">
+                            <span class="font-black text-slate-400 w-6 text-sm">(iii)</span>
+                            <input type="text" id="edit-opt-2" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm md:text-base text-slate-800 focus:border-sky-500 focus:outline-none font-semibold">
+                        </div>
+                        <div class="flex items-center gap-2 md:gap-3">
+                            <span class="font-black text-slate-400 w-6 text-sm">(iv)</span>
+                            <input type="text" id="edit-opt-3" class="w-full bg-white border border-slate-300 rounded-xl p-3 text-sm md:text-base text-slate-800 focus:border-sky-500 focus:outline-none font-semibold">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[13px] md:text-sm font-bold text-green-700 mb-2">✅ නිවැරදි පිළිතුර:</label>
+                    <select id="edit-correct" class="w-full bg-green-50 border border-green-300 text-green-800 rounded-xl p-3 md:p-4 text-sm md:text-base focus:border-green-500 focus:outline-none font-black shadow-sm">
+                        <option value="0">පිළිතුර (i) නිවැරදියි</option>
+                        <option value="1">පිළිතුර (ii) නිවැරදියි</option>
+                        <option value="2">පිළිතුර (iii) නිවැරදියි</option>
+                        <option value="3">පිළිතුර (iv) නිවැරදියි</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[13px] md:text-sm font-bold text-teal-700 mb-2">💡 පැහැදිලි කිරීම (Explanation):</label>
+                    <textarea id="edit-exp" rows="3" class="w-full bg-teal-50 border border-teal-200 rounded-xl p-3 md:p-4 text-sm md:text-base text-teal-950 focus:border-teal-500 focus:outline-none shadow-sm font-semibold"></textarea>
+                </div>
+            </div>
+
+            <div class="flex flex-col-reverse md:flex-row justify-end gap-3 mt-6 md:mt-8 border-t border-slate-100 pt-5 md:pt-6">
+                <button id="btn-cancel-edit" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 md:px-8 py-3.5 rounded-xl transition w-full md:w-auto active:scale-95">අවලංගු කරන්න</button>
+                <button id="btn-save-edit" class="bg-sky-500 hover:bg-sky-600 text-white font-black px-6 md:px-8 py-3.5 rounded-xl transition flex justify-center items-center gap-2 shadow-md w-full md:w-auto active:scale-95">
+                    <span id="save-edit-spinner" class="hidden animate-spin">⏳</span> සුරකින්න
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Details (Wrong Answers) Modal -->
+    <div id="student-details-modal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-center justify-center z-50 p-3 md:p-4">
+        <div class="bg-white border-2 border-sky-300 p-5 md:p-8 rounded-[2rem] shadow-2xl w-full max-w-2xl modal-scroll custom-scrollbar border-t-8 border-teal-500">
+            <h3 class="text-lg md:text-2xl font-black text-slate-800 mb-4 md:mb-6 border-b border-slate-100 pb-4 flex justify-between items-center">
+                <span id="details-student-name" class="flex items-center gap-2 text-sky-900">
+                    <span>📊</span> සිසුවාගේ වැරදුනු ප්‍රශ්න
+                </span>
+                <button id="close-details-btn" class="text-slate-400 hover:text-red-500 text-3xl md:text-4xl font-black p-2 active:scale-90 transition">&times;</button>
+            </h3>
+            <div id="wrong-answers-container" class="space-y-3 md:space-y-4">
+                <!-- Wrong answers will be populated here -->
+            </div>
+            <div class="mt-6 md:mt-8 text-right border-t border-slate-100 pt-5 md:pt-6">
+                <button id="close-details-btn-bottom" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-md w-full md:w-auto active:scale-95">වසා දමන්න</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        let app, auth, db, appId, currentUser;
+        let unsubscribeSnapshot = null;
+
+        async function initFirebase() {
+            try {
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+                if (!firebaseConfig) {
+                    console.warn("Cloud features disabled. Running in offline mode.");
+                    return;
+                }
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                
+                appId = typeof __app_id !== 'undefined' ? __app_id : 'daily-dose-grade5-paper27';
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, async (user) => {
+                    currentUser = user;
+                    if(user) {
+                        await fetchCustomQuestions();
+                    }
+                });
+            } catch (e) {
+                console.error("Firebase init failed:", e);
+            }
+        }
+        
+        initFirebase();
+
+        const romanNumerals = ["(i)", "(ii)", "(iii)", "(iv)"];
+        let currentScore = 0;
+        let studentName = "";
+        let answeredQuestions = new Set(); 
+        let currentEditingIndex = -1;
+        let quizStartTime = null; 
+        let quizEndTime = null;   
+        let studentWrongAnswers = []; 
+        
+        let questions = [
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>බෝසත් දරුවන් බිහිකිරීමට ගමේ පන්සලේ පවත්වාගෙන යන කුමන පාසල ඉතා වැදගත් වේද?", options: ["දහම් පාසල", "රජයේ පාසල", "ජාත්‍යන්තර පාසල", "පෞද්ගලික උපකාරක පන්තිය"], correct: 0, explanation: "\"බෝසත් දරුවන් බිහිකිරීමට ගමේ පන්සලේ දහම් පාසල ඉතා වැදගත් වේ\" යන්න 2015 ප්‍රාදේශීය විභාගයේ හිස්තැන් පිරවීමට අසා තිබුණි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>ගිහි අයගේ \"නිත්‍ය ශීලය\" ලෙස බුදු දහමේ හැඳින්වෙන්නේ කුමන ශීලයද?", options: ["පංච සීලය (පන්සිල්)", "අෂ්ටාංග උපෝසථ සීලය (අටසිල්)", "දස සීලය", "ආජීවට්ඨමක සීලය"], correct: 0, explanation: "ගිහි අය ජීවිත කාලය පුරාවටම ආරක්ෂා කළ යුතු ශීලය පන්සිල් බැවින් එය නිත්‍ය ශීලය වේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>\"මියුගුණ වෙහෙර\" නමින් හැඳින්වෙන ඓතිහාසික වෙහෙර කරවූ රජතුමා කවුද?", options: ["ධාතුසේන රජතුමා", "දුටුගැමුණු රජතුමා", "වළගම්බා රජතුමා", "මහසෙන් රජතුමා"], correct: 0, explanation: "ධාතුසේන රජතුමා කලා වැව, අවුකන පිළිමය මෙන්ම මියුගුණ වෙහෙර සහ දක්ඛිණගිරි වෙහෙර ද කරවීය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>වණ්ණුපථ ජාතකයෙහි තම පිරිස මරණයෙන් බේරාගත් සාත්තු නායකයා වී උපන්නේ කවුරුන්ද?", options: ["අප මහ බෝසතාණන් වහන්සේ", "ආනන්ද මහරහතන් වහන්සේ", "සැරියුත් මහරහතන් වහන්සේ", "දේවදත්ත හිමියන්"], correct: 0, explanation: "වීර්යය අත් නොහැර ජලය සොයාගත් සාත්තු නායකයා අන් කවරෙකුවත් නොව අප මහ බෝසතාණන් වහන්සේය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>බුදු සසුනේ නුවණින් අග තැන්පත් (අග්‍රස්ථානය ලැබූ) භික්ෂුණිය වූයේ කවුරුන්ද?", options: ["ඛේමා තෙරණිය", "උප්පලවණ්ණා තෙරණිය", "පටාචාරා තෙරණිය", "කිසාගෝතමී තෙරණිය"], correct: 0, explanation: "ඛේමා තෙරණියට මහා ප්‍රඥාව තිබූ බැවින් ඇය ප්‍රඥාවන්ත භික්ෂුණීන් අතරින් අග්‍රස්ථානය ලැබුවාය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>5 ශ්‍රේණිය දහම් පාසල් පෙළපොතේ ප්‍රධාන වශයෙන් ඉගැන්වෙන භාවනා ක්‍රම 3 නිවැරදිව දැක්වෙන පිළිතුර කුමක්ද?", options: ["ආනාපානසති, මෛත්‍රී සහ බුද්ධානුස්සති භාවනාව", "අසුභ, මරණානුස්සති සහ මෛත්‍රී භාවනාව", "සතිපට්ඨාන, ආනාපානසති සහ අසුභ භාවනාව", "බුද්ධානුස්සති, ධම්මානුස්සති සහ සංඝානුස්සති භාවනාව"], correct: 0, explanation: "5 වසරේදී ප්‍රධාන වශයෙන් මෛත්‍රී, ආනාපානසති සහ බුද්ධානුස්සති භාවනා පුහුණු කරවයි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>දුෂ්කර ක්‍රියාව සමයේදී සිරුරට අතිශය දුක් දීමෙන් බෝසතුන්ගේ සිරුරෙහි ඇතිවූ ලක්ෂණයක් වන්නේ කුමක්ද?", options: ["ඇස් ගිලී ගොස් කුස පිට කොන්දට ඇලී යාම", "ශරීරය රන්වන් පැහැයෙන් බැබළීමට පටන් ගැනීම", "සිරුරේ බර වැඩි වී ඉතා නීරෝගී බවක් පෙනීම", "දෙතිස් මහා පුරුෂ ලක්ෂණ තව තවත් පැහැදිලිව පෙනීම"], correct: 0, explanation: "ආහාර නොමැති වීම නිසා බෝසතුන්ගේ ඇස් ගිලී ගොස් සම රැලි වැටී කුස පිට කොන්දට ඇලී ගියේය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>සොරකම් කරන්නාට (අදින්නාදානය කරන පුද්ගලයාට) මෙලොවදීම ලැබෙන දුර්විපාකයක් වන්නේ කුමක්ද?", options: ["අන් අයගේ අවිශ්වාසයට සහ නින්දාවට පත්වීම", "රජතුමාගෙන් තෑගි බෝග සහ සම්මාන ලැබීම", "සමාජයේ ප්‍රසිද්ධ හා ධනවත් පුද්ගලයෙකු වීම", "දෙවියන්ගේ ආශිර්වාදය හිමි වීම"], correct: 0, explanation: "සොරකම් කරන්නාට මෙලොවදී නින්දා අපහාස විඳීමට සිදුවන අතර නිතරම බියෙන් ජීවත් වීමට සිදුවේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>ධාතුසේන රජතුමාගෙන් නිධානය ඉල්ලූ විට රජතුමා කාශ්‍යප කුමරුගේ රාජ පුරුෂයන්ට පෙන්වූයේ කුමක්ද?", options: ["කලා වැවේ ජලය දෝතට ගෙන පෙන්වීම", "රජ මාළිගාවේ සඟවා තිබූ රන් කාසි පිරුණු කරඬුවක්", "අවුකන බුදු පිළිමය වෙතට කැඳවාගෙන ගොස් පෙන්වීම", "යෝධ ඇළේ සැඟවුණු කුටියක්"], correct: 0, explanation: "රාජ පුරුෂයන්ට කලා වැවේ ජලය පෙන්වා රජතුමා \"මේ හැර වෙනත් නිධානයක් මට නැතැයි\" පැවසීය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2015 ප්‍රාදේශීය]</span><br>ගෙදර සහ අවට පරිසරය පිරිසිදු වූ විට අපට අත්වන ප්‍රධාන ප්‍රයෝජනයක් වන්නේ කුමක්ද?", options: ["මැසි මදුරුවන් බෝ නොවීමෙන් ලෙඩ රෝග අඩුවීම", "ගෙවත්තේ ඇති මල් පැළ ඉතා වේගයෙන් වර්ධනය වීම", "අසල්වැසියන්ගෙන් නිතරම මුදල් ත්‍යාග ලැබීම", "කිසිදු මහන්සියකින් තොරව ආහාර පාන ලැබීම"], correct: 0, explanation: "පරිසරය පිරිසිදුව තබා ගැනීමෙන් රෝග ව්‍යාප්තිය අඩුවී නීරෝගී ජීවිතයක් ගත කළ හැක."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>සෑම දෙමාපියෙකුම තම දරුවන් දහම් පාසලට යොමු කළහොත්, යහපත් සමාජයක් බිහිවීම නිසා අනාගතයේදී අපේ රටට අවශ්‍ය නොවන ස්ථානයක් ලෙස සඳහන් වන්නේ කුමක්ද?", options: ["සිරගෙවල්", "රෝහල්", "පාසල්", "ක්‍රීඩාංගණ"], correct: 0, explanation: "දහම් පාසලක් ඇරඹීම සිරගෙවල් සියයක් වැසීමක් හා සමාන බව පැරැන්නන් පවසා ඇත."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>\"අපට .......................... පිහිට හැර වෙනත් පිහිටක් නැත.\" බෞද්ධයෙකුට පිහිට හැර වෙනත් සැබෑම පිහිටක් නැතැයි කියැවෙන්නේ කුමන පිහිටක් ගැනද?", options: ["තෙරුවන්ගේ (බුද්ධ, ධම්ම, සංඝ) පිහිට", "අහසේ වැඩ වසන දෙවියන්ගේ පිහිට", "රට පාලනය කරන රජතුමාගේ පිහිට", "ධනවත් ඥාතීන්ගේ පිහිට"], correct: 0, explanation: "බෞද්ධයන් නිතරම විශ්වාස කරන්නේ බුද්ධ, ධම්ම සහ සංඝ යන තෙරුවන්ගේ සරණ පමණි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>නාසයෙන් හෝ මුඛයෙන් හුස්ම ඉහළට ගැනීම හා පහළට හෙළීම නතර කරමින් බෝසතුන් දුෂ්කර ක්‍රියා සමයේදී වැඩූ ධ්‍යානය හැඳින්වෙන්නේ කෙසේද?", options: ["අප්‍රාණික ධ්‍යානය", "ආනාපානසති භාවනාව", "මෛත්‍රී ධ්‍යානය", "ධම්මානුස්සති භාවනාව"], correct: 0, explanation: "හුස්ම ගැනීම නතර කරමින් කළ අතිශය දුෂ්කර භාවනාව අප්‍රාණික ධ්‍යානය ලෙස හැඳින්වේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>හුස්ම ගැනීම හා හෙළීම පිළිබඳ මැනවින් සිහිය පිහිටුවා ගැනීමේ භාවනාව බුදු දහමේ හඳුන්වන්නේ කුමන නමකින්ද?", options: ["ආනාපානසති භාවනාව", "බුද්ධානුස්සති භාවනාව", "අසුභ භාවනාව", "මරණානුස්සති භාවනාව"], correct: 0, explanation: "ආනාපානසතිය යනු ආශ්වාස (ඇතුළට ගන්නා හුස්ම) සහ ප්‍රශ්වාස (පිට කරන හුස්ම) පිළිබඳව සිහිය පිහිටුවා ගැනීමයි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>\"නැණ ගුණ අඩුවන හැමගෙම - හිස උඩ යාවි\" යන සිරිත් මල්දමේ කවියට අනුව, බොල් කරලින් (ඇට නැති කරල් වලින්) පිරුණු ගොයම කුමක් වේද?", options: ["අහසට නැඟේවි (ඉහළට එසවේවි)", "බිමට නැමේවි", "සුළඟට කැඩී යාවි", "බිමට සමතලා වේවි"], correct: 0, explanation: "සාරවත් කරල බිමට නැමෙන්නා සේම ගුණවත් පුද්ගලයා නිහතමානී වේ. බොල් කරල මෙන් ගුණ නැති අය උඩඟු වේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>වීදාගම මෛත්‍රෙය හිමියන් රචනා කළ \"ලෝවැඩ සඟරාවේ\" ධර්ම රත්නයේ ගුණ ඇතුළත් කවිය ආරම්භ වන්නේ කුමන පද පේළියෙන්ද?", options: ["නමදිම් මුනි ධර්මය අමයුරු...", "සෙත් සිරි දෙන මහ ගුණ මුහුදණන්...", "මුනිඳු දෙසූ විලසින මහඟු...", "තිබූ තැනක සොර සතුරන්..."], correct: 0, explanation: "ලෝවැඩ සඟරාවේ දෙවන කවිය වන 'නමදිම් මුනි ධර්මය අමයුරු...' යන්න ධර්ම රත්නයේ ගුණ ඇතුළත් කවියයි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>බුද්ධ චරිතයේ දැක්වෙන \"මහා අභිනිෂ්ක්‍රමණය\" යනු කුමක්දැයි වඩාත් නිවැරදිව දැක්වෙන පිළිතුර කුමක්ද?", options: ["සියලු සැප සම්පත් හැර දමා සත්‍යය සොයා ගිහිගෙයින් නික්ම යාම", "බෝසතාණන් වහන්සේ පළමු වරට උයන් සිරි නැරඹීමට යාම", "බුද්ධත්වය ලබා ගැනීමෙන් පසු ඉසිපතනාරාමයට වැඩම කිරීම", "ගිහිගෙය තුළ සිටිමින් සය අවුරුද්දක් දුෂ්කර ක්‍රියා කිරීම"], correct: 0, explanation: "විමුක්තිය සොයා සියලු යස ඉසුරු හැර දමා රහසේම මාළිගයෙන් නික්ම යාම මහා අභිනිෂ්ක්‍රමණයයි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>ආනාපානසති භාවනාව වැඩීමෙන් සිසුවෙකුට ලැබිය හැකි ප්‍රධානතම ප්‍රතිඵලයක් වන්නේ කුමක්ද?", options: ["සිත එකඟ වී මතක ශක්තිය වර්ධනය වීම", "කිසිම මහන්සියකින් තොරව විභාග ජය ගැනීම", "අනුන්ගේ සිතුවිලි දැන ගැනීමේ හැකියාව ලැබීම", "ශරීරයේ උස සහ බර ඉතා ඉක්මනින් වැඩි වීම"], correct: 0, explanation: "භාවනා කිරීමෙන් සිතේ ඒකාග්‍රතාවය වැඩිවන නිසා පාඩම් කරන දේවල් ඉතා හොඳින් මතකයේ රැඳේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>ඛේමා බිසවට රූපයේ අනිත්‍යතාව වටහා දීම සඳහා බුදුරජාණන් වහන්සේ යොදාගත් ඥානවන්ත උපක්‍රමය කුමක්ද?", options: ["රූමතියකගේ රූපයක් මවා එය දිරාපත් වී යන අයුරු පෙන්වීම", "ඇයට රූපයේ අනිත්‍ය බව දැක්වෙන දිගු බණක් දේශනා කිරීම", "රජතුමා ලවා ඇයට දැඩි ලෙස අවවාද කිරීම", "ඇයගේ රූපය ඉතා ඉක්මනින් අවලස්සන වීමට සැලැස්වීම"], correct: 0, explanation: "රූමතියකගේ රූපයක් මවා, එම රූපය ඇස් ඉදිරිපිටම දිරාපත් වී යන අයුරු පෙන්වීමෙන් බුදුහිමි ඇගේ මානය බිඳ දැමූහ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 දිස්ත්‍රික්]</span><br>විපතකදී ධෛර්යවන්තව සහ නොපසුබට වීර්යයෙන් කටයුතු කළයුතු බව අපට උගන්වන ජාතක කතාව කුමක්ද?", options: ["වණ්ණුපථ ජාතකය", "මහිලාමුඛ ජාතකය", "සත්තිගුම්බ ජාතකය", "අපණ්ණක ජාතකය"], correct: 0, explanation: "කාන්තාරයක අතරමං වූ ගැල්කරුවන්ගේ ජීවිත නොපසුබට වීර්යයෙන් බේරාගත් නායකයාගේ කතාව වණ්ණුපථ ජාතකයේ දැක්වේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>යහපත් සමාජයක් බිහිකරන දහම් පාසලක් ඇරඹීම කුමක් වැසීමක් හා සමාන යැයි අපේ මුතුන් මිත්තන් පැවසුවාද?", options: ["සිරගෙවල් සියයක් වැසීමක්", "රෝහල් සියයක් වැසීමක්", "පාසල් සියයක් වැසීමක්", "සුරාසැල් සියයක් වැසීමක්"], correct: 0, explanation: "දහම් පාසල් අධ්‍යාපනයෙන් අපරාධ අඩුවන බැවින් එය සිරගෙවල් සියයක් වැසීමක් ලෙස පැරැන්නන් සැලකූහ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>අපේ පැරණි මුතුන්මිත්තන් ඕනෑම යහපත් කටයුත්තක් ආරම්භයේදී හුරුවී සිටි උතුම් ක්‍රියාව කුමක්ද?", options: ["තෙරුවන් සරණ යාම", "නැකැත් බැලීම", "දේවාල වලට ගොස් පූජා පැවැත්වීම", "නක්ෂත්‍රකරුවන් හමුවීම"], correct: 0, explanation: "පැරැන්නන් ඕනෑම යහපත් කටයුත්තක් ආරම්භයේදී තෙරුවන් සරණ යෑමට හුරු වී සිටියේ එයින් හොඳ ප්‍රතිඵල ලැබෙන නිසයි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>ධර්මය නොදන්නා තැනැත්තා බුදු දහමේ සමාන කර ඇත්තේ කවරෙකුටද?", options: ["තිරිසනෙකුට", "අන්ධයෙකුට", "මළමිනියකට", "බිහිරෙකුට"], correct: 0, explanation: "ධර්මය නොදන්නා තැනැත්තා තිරිසනෙකුට සමාන බව බුදු දහමේ උගන්වයි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>\"සිද්ධාර්ථ\" යන නමෙහි නියම අර්ථය වන්නේ කුමක්ද?", options: ["සියලු අදහස් ඉටු කරන හෙවත් ලෝකයාට සෙතක් සලසන්නා", "මුළු ලෝකයම ජයගන්නා ශ්‍රේෂ්ඨ රජතුමා", "බුදු බවට පත්වන ලෝක නායකයා", "සියලු ශිල්ප ශාස්ත්‍ර දන්නා පඬිවරයා"], correct: 0, explanation: "කුමරුගේ උපතින් සැමගේ අදහස් ඉටු වූ බැවින් \"සිද්ධාර්ථ\" යැයි නම තැබීය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>සිදුහත් කුමරු මහා අභිනිෂ්ක්‍රමණය කරන අවස්ථාවේ දී එතුමා සමඟ ගිය ඇමතියා සහ අශ්වයාගේ නම් මොනවාද?", options: ["ඡන්න ඇමතියා සහ කන්ථක අශ්වයා", "කාලුදායී ඇමතියා සහ කන්ථක අශ්වයා", "මහානාම ඇමතියා සහ අජානේය අශ්වයා", "විධුර ඇමතියා සහ සින්ධව අශ්වයා"], correct: 0, explanation: "බෝසතාණන් වහන්සේ කන්ථක අසු පිට නැගී ඡන්න ඇමතියා සමඟින් මහා අභිනිෂ්ක්‍රමණය කළහ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>ජීවිතය යහපත් කර ගැනීමට වටිනා උපදෙස් ඇතුළත් පැරණි කවි පොත් දෙකක් නිවැරදිව දැක්වෙන පිළිතුර කුමක්ද?", options: ["ලෝවැඩ සඟරාව සහ සුභාෂිතය", "මහාවංශය සහ දීපවංශය", "සිදත් සඟරාව සහ අමාවතුර", "බුත්සරණ සහ ගුත්තිලය"], correct: 0, explanation: "ලෝවැඩ සඟරාව සහ සුභාෂිතය යනු වටිනා උපදෙස් දෙන පැරණි කවි පොත් වේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>සිදුහත් කුමරු උයන් සිරි නැරඹීමට ගිය ගමන් වලදී පිළිවෙළින් දුටු සතර පෙර නිමිති මොනවාද?", options: ["මහල්ලෙක්, ලෙඩෙක්, මළමිනියක් සහ පැවිද්දෙක්", "රෝගියෙක්, මහල්ලෙක්, මළමිනියක් සහ පැවිද්දෙක්", "පැවිදි රුවක්, මළමිනියක්, මහල්ලෙක් සහ රෝගියෙක්", "මහල්ලෙක්, පැවිදි රුවක්, රෝගියෙක් සහ මළමිනියක්"], correct: 0, explanation: "පළමුව දිරාගිය මහල්ලෙක්ද, පසුව රෝගියෙකු හා මළමිනියක්ද, අවසානයේ පැවිදි රුවක්ද කුමරු දුටුවේය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>දුෂ්කර ක්‍රියා සමයේදී උපස්ථාන කළ පස්වග තවුසන්, බෝසතාණන් වහන්සේව අතහැර යාමට ප්‍රධානතම හේතුව කුමක්ද?", options: ["බෝසතුන් මැදුම් පිළිවෙතට පිවිසෙමින් නැවතත් ආහාර ගැනීම ආරම්භ කළ නිසා", "බෝසතුන්ට බුද්ධත්වය ලබා ගැනීමට නොහැකි යැයි ඔවුන් තරයේ විශ්වාස කළ නිසා", "සුද්ධෝදන රජතුමා විසින් ඔවුන්ව නැවත මාළිගාවට කැඳවා ගත් නිසා", "ඔවුන්ට බෝසතාණන් වහන්සේට වඩා උසස් ධ්‍යාන බලයක් ලැබුණු නිසා"], correct: 0, explanation: "බෝසතුන් ආහාර ගැනීම (මැදුම් පිළිවෙත) ආරම්භ කළ විට, පස්වග තවුසන් බෝසතුන් පිනට ගිජු වූයේයැයි සිතා අතහැර ගියහ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>ඛේමා බිසව බුදුරජාණන් වහන්සේට නිතරම දොස් පවරමින් උන්වහන්සේ දැකීමට අකමැති වූයේ ඇයි?", options: ["තම රූපය ගැන අහංකාරයෙන් සිටි ඇයට බුදුහිමි රූපයේ අනිත්‍ය දෙසන නිසා", "ඇය වෙනත් ආගමික ශාස්තෘවරයෙකුගේ ඉගැන්වීම් කෙරෙහි දැඩිව පැහැදී සිටි බැවින්", "බිම්බිසාර රජතුමා විසින් ඇයට වේළුවනාරාමයට යාම තහනම් කර තිබූ බැවින්", "කාන්තාවන්ට ධර්මය දේශනා කිරීම බුදුරදුන් ප්‍රතික්ෂේප කරනු ඇතැයි සිතූ බැවින්"], correct: 0, explanation: "තම රූපය ගැන අහංකාරයෙන් සිටි ඛේමා බිසව, බුදුහිමි රූපයේ අනිත්‍ය දෙසන බැවින් උන්වහන්සේ දැකීමට අකමැති වූවාය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2016 ප්‍රාදේශීය]</span><br>කලා වැවට අමතරව ධාතුසේන රජතුමා විසින් ඉදි කරවන ලද සුවිශේෂී නිර්මාණ දෙකක් වන්නේ කුමක්ද?", options: ["අවුකන බුදු පිළිමය සහ යෝධ ඇළ", "රුවන්වැලි සෑය සහ ලෝවාමහාපාය", "මින්නේරිය වැව සහ පරාක්‍රම සමුද්‍රය", "සමාධි බුදු පිළිමය සහ අභයගිරි ස්ථූපය"], correct: 0, explanation: "අවුකන බුදු පිළිමය සහ සැතපුම් 54ක් දිගැති යෝධ ඇළ ධාතුසේන රජුගේ විශිෂ්ට නිර්මාණ වේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>අපේ ජීවිත සුවඳැති, රුවැති මලකට සමාන වන්නේ කුමන කරුණු දෙකකින් යුක්ත වූ විටද?", options: ["යහපත් ගුණධර්ම හා නුවණින් යුක්ත වූ විට", "ධනයෙන් සහ බලයෙන් යුක්ත වූ විට", "රූපයෙන් අලංකාර වූ විට සහ ප්‍රසිද්ධ වූ විට", "සමාජයේ ඉහළම තනතුරු වලට පත් වූ විට"], correct: 0, explanation: "ජීවිතය ගුණධර්ම හා නුවණින් යුක්ත වූ විට එය සුවඳැති රුවැති මලකට සමාන වේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>අතීත කිඹුල්වත් පුරයේ කුඹුරු ගොවිතැන් කටයුතු ආරම්භ කිරීම නිමිත්තෙන් පැවැත්වූ උත්සවය කුමක්ද?", options: ["වප් මඟුල් උත්සවය", "අස්වැන්න නෙළීමේ උත්සවය", "අලුත් සහල් මංගල්‍යය", "ඇසළ උත්සවය"], correct: 0, explanation: "කිඹුල්වත් පුර ගොවිතැන් කටයුතු ඇරඹෙන්නේ වප් මඟුල් උත්සවයෙනි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>ශරීරයට දැඩි ලෙස දුක්දීම (දුෂ්කර ක්‍රියාව) අත්හැර දැමීමට බෝසතාණන් වහන්සේ තීරණය කළේ ඇයි?", options: ["එය බුද්ධත්වයට මාර්ගය නොවන බව අවබෝධ වූ නිසා", "ආහාර නොමැති වීම නිසා ශරීරය දුර්වල වී මරණයට පත් වෙතැයි සිතූ නිසා", "පස්වග තවුසන් විසින් ලබාදුන් උපදෙස් මත ශරීරයට වධ දීම නිෂ්ඵල බව පෙනී ගිය නිසා", "දෙවියන් විසින් පැමිණ පවසා සිටි පරිදි, මැදුම් පිළිවෙත අනුගමනය කිරීම වඩාත් පහසු බව තීරණය කළ නිසා"], correct: 0, explanation: "අතිශය දුක් පීඩා වින්දත් එයින් බුද්ධත්වය ලැබිය නොහැකි බව තේරුම් ගත් බෝසතුන් එය අත්හැරියහ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>මහිලාමුඛ ජාතක කතාවට අනුව සතුන්ගේ පවා හැසිරීම වෙනස් කිරීමට ප්‍රබලව බලපාන කරුණක් ලෙස දැක්වෙන්නේ කුමක්ද?", options: ["නිතර නිතර අසන්නට ලැබෙන වචන සහ පරිසරය", "ඔවුන්ට ලබාදෙන ආහාර වර්ග", "ඔවුන්ට පහර දීම සහ දඬුවම් කිරීම", "වනයක තනිවම ජීවත් වීමට සැලැස්වීම"], correct: 0, explanation: "ඇසෙන වචන සතුන්ට පවා බලපාන බැවින් අප යහපත් වචන කතා කිරීමටත්, හොඳ වචන වලට ඇහුම්කන් දීමටත් පුරුදු විය යුතුය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>අනුරාධපුරය \"වැව් බැඳි රාජ්‍යය\" ලෙස ඉතිහාසයේ ප්‍රචලිත වීමට ප්‍රධාන හේතුව කුමක්ද?", options: ["කෘෂිකර්මාන්තය සඳහා රජවරුන් වැව් රාශියක් නිර්මාණය කර තිබීම", "එහි විශාලතම සහ පැරණිතම වැව පිහිටා තිබීම", "එහි ජීවත් වූ ජනතාව පානය කිරීම සඳහා වැව් ජලය පමණක්ම භාවිත කිරීම", "අනුබුදු මිහිඳු මහරහතන් වහන්සේ විසින් එම නගරය එසේ නම් කරනු ලැබීම"], correct: 0, explanation: "කෘෂිකර්මාන්තය නංවාලීම සඳහා සිංහල රජවරු අනුරාධපුරය කේන්ද්‍ර කරගෙන විශාල වැව් ප්‍රමාණයක් නිර්මාණය කළහ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>\"සබ්බ පාපස්ස අකරණං - කුසලස්ස උපසම්පදා\" යන ගාථා පාඨයෙන් අදහස් කරන්නේ කුමක්ද?", options: ["සියලු පව් නොකිරීම සහ කුසල් (පින්) රැස් කිරීම", "තමාගේ සිතේ ඇති කිලිටි ඉවත් කර සිත පිරිසිදු කර ගැනීම", "අනුන්ගේ වැරදි සහ අඩුපාඩු නිතර නිතර සෙවීමෙන් වැළකී සිටීම", "දිනපතාම විහාරස්ථානයට ගොස් මල් පහන් පූජා කිරීම"], correct: 0, explanation: "සබ්බ පාපස්ස අකරණං (පව් නොකිරීම), කුසලස්ස උපසම්පදා (කුසල් රැස් කිරීම) යන්න මෙහි අර්ථයයි."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>බුද්ධානුස්සති (බුදු ගුණ) භාවනාව නිතර වඩන පුද්ගලයෙකුට ලැබෙන උතුම් ප්‍රතිඵලයක් වන්නේ කුමක්ද?", options: ["බුදුරජාණන් වහන්සේ කෙරෙහි ශ්‍රද්ධාව වැඩි වී සිතට මහත් සැනසිල්ලක් ලැබීම", "කිසිදු දිනක ලෙඩ රෝග නොහැදීම", "සැමවිටම ධනවතෙකු වීම", "අමනුෂ්‍යයන් පාලනය කිරීමේ හැකියාව ලැබීම"], correct: 0, explanation: "බුදුගුණ මෙනෙහි කිරීමෙන් උන්වහන්සේ කෙරෙහි අප්‍රමාණ ශ්‍රද්ධාවක් සහ භක්තියක් ඇති වේ."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>පෞද්ගලික පිරිසිදුකම රැක ගැනීම සඳහා වැසිකිළි භාවිතයෙන් පසුව අනිවාර්යයෙන්ම කළයුතු යහපත් පුරුද්දක් වන්නේ කුමක්ද?", options: ["සබන් යොදා දෑත් හොඳින් සෝදා ගැනීම", "වතුර නොදමා පැමිණීම", "සුවඳ විලවුන් ඉසීම පමණක් කිරීම", "දොර වැසීම පමණක් කිරීම"], correct: 0, explanation: "පිරිසිදුකම රකා ගැනීමට වැසිකිළි භාවිතයෙන් පසු සබන් යොදා දෑත් හොඳින් සෝදාගත යුතුය."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 දිස්ත්‍රික්]</span><br>පන්සිල් සුරකින සිල්වත් පුද්ගලයෙකුට මෙලොවදීම අත්වන ප්‍රයෝජනයක් වන්නේ මින් කුමක්ද?", options: ["කිසිවෙකුටත් බියක් සැකක් නොමැතිව ඕනෑම පිරිසක් ඉදිරියට යාමට හැකිවීම", "ඉතා ඉක්මනින් විශාල ධනවතෙකු වීමට හැකිවීම", "නිතරම විභාග වලින් ජයගැනීමට හැකිවීම", "කිසිදාක ශරීරයේ අසනීප තත්ත්වයන් ඇති නොවීම"], correct: 0, explanation: "සිල්වත් පුද්ගලයාට කිසිවෙකුට බියක් සැකක් නැතිව ඕනෑම පිරිසක් ඉදිරියට යා හැක."},
+            {q: "<span class='bg-sky-100 text-sky-800 px-2.5 py-1 rounded text-[12px] font-bold tracking-wider mb-2 inline-block border border-sky-200'>[2017 ප්‍රාදේශීය]</span><br>\"ඇම පමණින් පැවසූ මුනි දැන තතු - .................................................\" යන කවියේ ඊළඟ පද පේළිය කුමක්ද?", options: ["හැම දෙන සසර දුකින් ගලවන යුතු", "බම කරමින් හැසිරෙත දන අවැතු", "සුව දෙන මහ ගුණ මුහුදාණන්", "ඇඳිලි බැඳ වැඳීමට සුදුසුය"], correct: 0, explanation: "ලෝවැඩ සඟරාවේ එන මෙම කවියෙහි දෙවන පදය වන්නේ 'හැම දෙන සසර දුකින් ගලවන යුතු' යන්නයි."}
+        ];
+
+        function shuffleOptions(question) {
+            let options = question.options.map((opt, i) => ({ opt, isCorrect: i === question.correct }));
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            question.options = options.map(o => o.opt);
+            question.correct = options.findIndex(o => o.isCorrect);
+        }
+        
+        questions.forEach(shuffleOptions);
+
+        async function fetchCustomQuestions() {
+            if(!db || !appId) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'mcq_questions_grade5', 'default_set');
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if(data.questionsList && Array.isArray(data.questionsList)) {
+                        questions = data.questionsList;
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching custom questions: ", error);
+            }
+        }
+
+        function showView(viewId) {
+            ['view-welcome', 'view-quiz', 'view-completion', 'view-teacher'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+            
+            if(viewId === 'view-quiz') {
+                document.getElementById('score-board').classList.remove('hidden');
+            } else {
+                document.getElementById('score-board').classList.add('hidden');
+            }
+        }
+
+        function showAlert(message, isSuccess = false) {
+            document.getElementById('alert-message').innerText = message;
+            document.getElementById('alert-icon').innerText = isSuccess ? '✅' : '🔔';
+            document.getElementById('alert-modal').classList.remove('hidden');
+            
+            const modalContent = document.querySelector('#alert-modal > div');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 50);
+        }
+        
+        document.getElementById('alert-close').addEventListener('click', () => {
+            document.getElementById('alert-modal').classList.add('hidden');
+        });
+
+        document.getElementById('btn-start-quiz').addEventListener('click', () => {
+            const nameInput = document.getElementById('student-name').value.trim();
+            if (nameInput === "") {
+                showAlert("කරුණාකර පරීක්ෂණය ආරම්භ කිරීමට පෙර ඔබේ නම ඇතුළත් කරන්න.");
+                return;
+            }
+            studentName = nameInput;
+            quizStartTime = new Date().toISOString(); 
+            renderQuiz();
+            showView('view-quiz');
+            window.scrollTo(0,0);
+        });
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = "";
+            currentScore = 0;
+            answeredQuestions.clear();
+            studentWrongAnswers = []; 
+            document.getElementById('score').innerText = "0";
+            document.getElementById('final-score').innerText = "0";
+            
+            questions.forEach((q, qIndex) => {
+                const card = document.createElement("div");
+                card.className = "bg-white/95 backdrop-blur-sm p-6 md:p-8 rounded-[2rem] shadow-[0_5px_20px_rgba(20,184,166,0.15)] border border-teal-100 border-t-4 border-t-sky-500 mb-6 hover:shadow-[0_8px_25px_rgba(14,165,233,0.2)] transition-shadow";
+                
+                const questionText = document.createElement("h3");
+                questionText.className = "text-base md:text-lg font-bold mb-5 leading-relaxed text-sky-950 flex items-start gap-2 md:gap-3";
+                questionText.innerHTML = `<span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-lg shrink-0 border border-teal-200 mt-1">${qIndex + 1}</span> <span class="w-full">${q.q}</span>`;
+                card.appendChild(questionText);
+
+                const optionsDiv = document.createElement("div");
+                optionsDiv.className = "grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4"; 
+                
+                const feedbackDiv = document.createElement("div");
+                feedbackDiv.id = `feedback-${qIndex}`;
+                feedbackDiv.className = "hidden mt-5 p-4 rounded-xl text-sm font-semibold transition-all";
+
+                q.options.forEach((opt, optIndex) => {
+                    const btn = document.createElement("button");
+                    btn.id = `btn-${qIndex}-${optIndex}`;
+                    btn.className = "option-btn bg-slate-50 hover:bg-teal-50 border-2 border-teal-100 hover:border-teal-400 text-left p-4 rounded-xl w-full font-medium text-slate-600 hover:text-sky-950 focus:outline-none flex items-start gap-3 shadow-sm";
+                    btn.innerHTML = `<span class="font-black text-teal-600 shrink-0 bg-white border border-teal-200 rounded-md px-2 py-0.5">${romanNumerals[optIndex]}</span> <span>${opt}</span>`;
+                    
+                    btn.addEventListener('click', () => handleAnswer(qIndex, optIndex, q.correct, q.explanation, optionsDiv, feedbackDiv));
+                    optionsDiv.appendChild(btn);
+                });
+
+                card.appendChild(optionsDiv);
+                card.appendChild(feedbackDiv);
+                container.appendChild(card);
+            });
+        }
+
+        function handleAnswer(qIndex, selectedIndex, correctIndex, explanation, optionsDiv, feedbackDiv) {
+            if (answeredQuestions.has(qIndex)) return;
+            answeredQuestions.add(qIndex);
+            
+            const buttons = optionsDiv.querySelectorAll("button");
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove("hover:bg-teal-50", "hover:border-teal-400", "hover:text-sky-950");
+                btn.classList.add("opacity-60", "cursor-not-allowed");
+            });
+
+            const selectedBtn = document.getElementById(`btn-${qIndex}-${selectedIndex}`);
+            const correctBtn = document.getElementById(`btn-${qIndex}-${correctIndex}`);
+
+            feedbackDiv.classList.remove("hidden");
+
+            if (selectedIndex == correctIndex) {
+                currentScore++;
+                document.getElementById('score').innerText = currentScore;
+                
+                selectedBtn.classList.remove("bg-slate-50", "border-teal-100", "opacity-60", "text-slate-600");
+                selectedBtn.classList.add("bg-green-100", "border-green-500", "text-green-900", "opacity-100", "shadow-[0_0_15px_rgba(34,197,94,0.4)]");
+                selectedBtn.querySelector('span').classList.replace("text-teal-600", "text-green-700");
+                selectedBtn.querySelector('span').classList.replace("border-teal-200", "border-green-400");
+                
+                feedbackDiv.classList.add("bg-green-50", "text-green-900", "border", "border-green-400");
+                feedbackDiv.innerHTML = `<div class="flex gap-2 text-sm md:text-base"><span class="text-xl">🌟</span> <div><strong class="text-green-800">ඉතා විශිෂ්ටයි!</strong><br><span class="text-green-700 mt-1.5 block font-medium leading-relaxed">${explanation}</span></div></div>`;
+            } else {
+                studentWrongAnswers.push({
+                    q: questions[qIndex].q,
+                    selected: questions[qIndex].options[selectedIndex],
+                    correct: questions[qIndex].options[correctIndex]
+                });
+
+                selectedBtn.classList.remove("bg-slate-50", "border-teal-100", "opacity-60", "text-slate-600");
+                selectedBtn.classList.add("bg-red-50", "border-red-400", "text-red-900", "opacity-100", "shadow-[0_0_15px_rgba(248,113,113,0.3)]");
+                selectedBtn.querySelector('span').classList.replace("text-teal-600", "text-red-600");
+                selectedBtn.querySelector('span').classList.replace("border-teal-200", "border-red-300");
+                
+                correctBtn.classList.remove("bg-slate-50", "border-teal-100", "opacity-60", "text-slate-600");
+                correctBtn.classList.add("bg-green-50", "border-green-400", "text-green-900", "opacity-100");
+                correctBtn.querySelector('span').classList.replace("text-teal-600", "text-green-700");
+                correctBtn.querySelector('span').classList.replace("border-teal-200", "border-green-300");
+
+                feedbackDiv.classList.add("bg-red-50", "text-red-900", "border", "border-red-300");
+                feedbackDiv.innerHTML = `<div class="flex gap-2 text-sm md:text-base"><span class="text-xl">💡</span> <div><strong class="text-red-700">වැරදියි!</strong> නිවැරදි පිළිතුර: <strong class="bg-white px-2 py-0.5 rounded border border-red-200">${romanNumerals[correctIndex]}</strong><br><span class="text-red-700 mt-1.5 block font-medium leading-relaxed"><strong>හේතුව:</strong> ${explanation}</span></div></div>`;
+            }
+
+            checkCompletion();
+        }
+
+        async function checkCompletion() {
+            if (answeredQuestions.size === questions.length) {
+                quizEndTime = new Date().toISOString(); 
+                document.getElementById('final-score').innerText = currentScore;
+                
+                setTimeout(() => {
+                    showView('view-completion');
+                    window.scrollTo(0,0);
+                }, 1200);
+                
+                const saveStatusEl = document.getElementById('save-status');
+                if (!currentUser || !db) {
+                    saveStatusEl.innerHTML = "⚠️ අන්තර්ජාල සම්බන්දතාවක් නොමැත. ලකුණු යැවීමට නොහැකි විය.";
+                    saveStatusEl.className = "text-xs md:text-sm font-bold text-red-500 mb-6 md:mb-8 bg-red-50 py-3 md:py-4 rounded-xl border border-red-200";
+                    return;
+                }
+
+                try {
+                    const collectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'mcq_scores_grade5');
+                    await addDoc(collectionPath, {
+                        studentName: studentName,
+                        score: currentScore,
+                        total: questions.length,
+                        startTime: quizStartTime,
+                        endTime: quizEndTime,
+                        timestamp: quizEndTime,
+                        wrongAnswers: studentWrongAnswers 
+                    });
+                    
+                    saveStatusEl.innerHTML = "✅ ප්‍රතිඵල ගුරුවරයා වෙත සාර්ථකව යවන ලදී!";
+                    saveStatusEl.className = "text-xs md:text-sm font-bold text-sky-900 mb-6 md:mb-8 bg-teal-50 py-3 md:py-4 rounded-xl border border-teal-300";
+                } catch (e) {
+                    console.error("Save error:", e);
+                    saveStatusEl.innerHTML = "❌ අන්තර්ජාල දෝෂයක්. ප්‍රතිඵල යැවීමට නොහැකි විය.";
+                    saveStatusEl.className = "text-xs md:text-sm font-bold text-red-500 mb-6 md:mb-8 bg-red-50 py-3 md:py-4 rounded-xl border border-red-200";
+                }
+            }
+        }
+
+        document.getElementById('btn-restart').addEventListener('click', () => location.reload());
+
+        const pinModal = document.getElementById('pin-modal');
+        const pinInput = document.getElementById('pin-input');
+        const pinError = document.getElementById('pin-error');
+        const tabResults = document.getElementById('tab-results');
+        const tabEdit = document.getElementById('tab-edit');
+        const sectionResults = document.getElementById('section-results');
+        const sectionEdit = document.getElementById('section-edit');
+        const editModal = document.getElementById('edit-q-modal');
+
+        document.getElementById('btn-show-teacher').addEventListener('click', () => {
+            pinInput.value = "";
+            pinError.classList.add('hidden');
+            pinModal.classList.remove('hidden');
+        });
+
+        document.getElementById('cancel-pin').addEventListener('click', () => pinModal.classList.add('hidden'));
+
+        document.getElementById('submit-pin').addEventListener('click', () => {
+            if (pinInput.value === "2001") {
+                pinModal.classList.add('hidden');
+                showView('view-teacher');
+                loadTeacherData();
+                renderEditList();
+            } else {
+                pinError.classList.remove('hidden');
+            }
+        });
+        
+        document.getElementById('btn-back-home').addEventListener('click', () => {
+            if (unsubscribeSnapshot) unsubscribeSnapshot();
+            showView('view-welcome');
+        });
+
+        tabResults.addEventListener('click', () => {
+            tabResults.className = "flex-1 py-4 font-black text-teal-600 border-b-4 border-teal-500 focus:outline-none transition bg-sky-50/50";
+            tabEdit.className = "flex-1 py-4 font-bold text-slate-400 hover:text-teal-600 border-b-4 border-transparent focus:outline-none transition";
+            sectionResults.classList.remove('hidden');
+            sectionEdit.classList.add('hidden');
+        });
+
+        tabEdit.addEventListener('click', () => {
+            tabEdit.className = "flex-1 py-4 font-black text-teal-600 border-b-4 border-teal-500 focus:outline-none transition bg-sky-50/50";
+            tabResults.className = "flex-1 py-4 font-bold text-slate-400 hover:text-teal-600 border-b-4 border-transparent focus:outline-none transition";
+            sectionEdit.classList.remove('hidden');
+            sectionResults.classList.add('hidden');
+        });
+
+        function formatDate(isoString) {
+            if(!isoString) return "-";
+            const d = new Date(isoString);
+            return d.toLocaleDateString('si-LK') + " " + d.toLocaleTimeString('si-LK', {hour: '2-digit', minute:'2-digit'});
+        }
+
+        function loadTeacherData() {
+            const tbody = document.getElementById('teacher-table-body');
+            if (!currentUser || !db) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center p-6 text-red-500 font-bold bg-white/50">අන්තර්ජාල සම්බන්දතාවක් නොමැත.</td></tr>';
+                return;
+            }
+            if (unsubscribeSnapshot) unsubscribeSnapshot(); 
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center p-6 text-slate-500 font-bold bg-white/50">දත්ත ලබාගනිමින් පවතී... ⏳</td></tr>';
+
+            const collectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'mcq_scores_grade5');
+            unsubscribeSnapshot = onSnapshot(collectionPath, (snapshot) => {
+                let results = [];
+                snapshot.forEach(doc => {
+                    results.push({ id: doc.id, ...doc.data() });
+                });
+                
+                results.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                tbody.innerHTML = "";
+                
+                if (results.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center p-6 text-slate-500 font-bold bg-slate-50">තවමත් කිසිදු සිසුවෙකු පරීක්ෂණය කර නොමැත.</td></tr>';
+                    return;
+                }
+
+                results.forEach((res) => {
+                    const tr = document.createElement('tr');
+                    tr.className = "border-b border-sky-100 hover:bg-teal-50/50 transition";
+                    let scoreColor = "text-teal-600";
+                    if(res.score >= 30) scoreColor = "text-green-600";
+                    else if(res.score < 20) scoreColor = "text-red-500";
+                    
+                    const sTime = res.startTime || res.timestamp;
+                    const eTime = res.endTime || res.timestamp;
+
+                    tr.innerHTML = `
+                        <td class="p-4 md:p-5 font-bold text-slate-800">${res.studentName}</td>
+                        <td class="p-4 md:p-5 font-black text-center text-lg ${scoreColor}">${res.score} <span class="text-slate-400 text-xs font-bold">/ ${res.total}</span></td>
+                        <td class="p-4 md:p-5 text-xs md:text-sm text-slate-500 font-medium">${formatDate(sTime)}</td>
+                        <td class="p-4 md:p-5 text-xs md:text-sm text-slate-500 font-medium">${formatDate(eTime)}</td>
+                        <td class="p-4 md:p-5 text-center">
+                            <button class="bg-white hover:bg-teal-50 text-sky-900 px-4 py-2 rounded-xl font-bold transition view-details-btn shadow-sm border border-teal-200 text-xs md:text-sm active:scale-95">වැරදුනු ප්‍රශ්න</button>
+                        </td>
+                    `;
+                    
+                    const viewBtn = tr.querySelector('.view-details-btn');
+                    viewBtn.addEventListener('click', () => openStudentDetails(res));
+
+                    tbody.appendChild(tr);
+                });
+            }, (error) => {
+                console.error("Teacher snapshot error:", error);
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center p-6 text-red-500 font-bold bg-white/50">දත්ත ලබාගැනීමේදී දෝෂයක් ඇතිවිය.</td></tr>';
+            });
+        }
+
+        function renderEditList() {
+            const listDiv = document.getElementById('edit-questions-list');
+            listDiv.innerHTML = "";
+            questions.forEach((q, idx) => {
+                const item = document.createElement('div');
+                item.className = "bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-sky-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 hover:border-sky-400 transition";
+                item.innerHTML = `
+                    <div class="flex-1 w-full">
+                        <p class="font-bold text-slate-700 text-sm md:text-base leading-relaxed"><span class="bg-teal-100 text-teal-900 px-2.5 py-1 rounded-lg text-xs md:text-sm mr-2 border border-teal-200">${idx + 1}</span>${q.q}</p>
+                    </div>
+                    <button class="bg-teal-50 hover:bg-teal-600 hover:text-white text-teal-900 border border-teal-200 hover:border-teal-500 px-6 py-2.5 rounded-xl font-bold text-xs md:text-sm transition shrink-0 shadow-sm w-full md:w-auto active:scale-95">
+                        සංස්කරණය
+                    </button>
+                `;
+                const btn = item.querySelector('button');
+                btn.addEventListener('click', () => openEditModal(idx));
+                listDiv.appendChild(item);
+            });
+        }
+
+        function openEditModal(index) {
+            currentEditingIndex = index;
+            const q = questions[index];
+            
+            document.getElementById('editing-q-number').innerText = `ප්‍රශ්න අංක ${index + 1}`;
+            document.getElementById('edit-q-text').value = q.q;
+            document.getElementById('edit-opt-0').value = q.options[0];
+            document.getElementById('edit-opt-1').value = q.options[1];
+            document.getElementById('edit-opt-2').value = q.options[2];
+            document.getElementById('edit-opt-3').value = q.options[3];
+            document.getElementById('edit-correct').value = q.correct;
+            document.getElementById('edit-exp').value = q.explanation;
+            
+            document.getElementById('edit-q-modal').classList.remove('hidden');
+        }
+
+        document.getElementById('btn-cancel-edit').addEventListener('click', () => {
+            document.getElementById('edit-q-modal').classList.add('hidden');
+        });
+
+        const studentDetailsModal = document.getElementById('student-details-modal');
+        
+        document.getElementById('close-details-btn').addEventListener('click', () => {
+            studentDetailsModal.classList.add('hidden');
+        });
+        document.getElementById('close-details-btn-bottom').addEventListener('click', () => {
+            studentDetailsModal.classList.add('hidden');
+        });
+
+        function openStudentDetails(res) {
+            document.getElementById('details-student-name').innerHTML = `<span class="text-sky-600">📊</span> ${res.studentName} ගේ ප්‍රතිඵලය`;
+            const container = document.getElementById('wrong-answers-container');
+            container.innerHTML = "";
+
+            if (!res.wrongAnswers || res.wrongAnswers.length === 0) {
+                if (res.score === res.total) {
+                    container.innerHTML = `<div class="bg-green-50 p-6 md:p-8 rounded-2xl border border-green-200 text-center"><p class="text-green-600 font-black text-xl md:text-2xl mb-2">🎉 විශිෂ්ටයි!</p><p class="text-green-700 font-bold text-sm md:text-base">සියලුම ප්‍රශ්න නිවැරදියි.</p></div>`;
+                } else {
+                    container.innerHTML = `<p class="text-slate-500 text-center py-8 font-bold bg-white rounded-2xl text-sm md:text-base border border-slate-200">මෙම දත්තය පැරණි බැවින් වැරදුනු ප්‍රශ්න වාර්තා වී නොමැත.</p>`;
+                }
+            } else {
+                res.wrongAnswers.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = "bg-white p-4 md:p-5 rounded-2xl border border-teal-100 shadow-sm";
+                    div.innerHTML = `
+                        <p class="font-bold text-slate-800 text-[14px] md:text-base mb-3 leading-relaxed">${index + 1}.${item.q}</p>
+                        <div class="space-y-2 bg-slate-50 p-3 md:p-4 rounded-xl border border-slate-100">
+                            <p class="text-xs md:text-sm text-red-500 font-bold flex items-start gap-2"><span>❌</span> <span>ළමයා දුන් පිළිතුර:<br><span class="text-slate-600 font-medium">${item.selected}</span></span></p>
+                            <div class="h-px bg-slate-200 my-2"></div>
+                            <p class="text-xs md:text-sm text-green-600 font-bold flex items-start gap-2"><span>✅</span> <span>නිවැරදි පිළිතුර:<br><span class="text-slate-600 font-medium">${item.correct}</span></span></p>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+            studentDetailsModal.classList.remove('hidden');
+        }
+
+        document.getElementById('btn-save-edit').addEventListener('click', async () => {
+            if(currentEditingIndex < 0) return;
+
+            const qText = document.getElementById('edit-q-text').value.trim();
+            const o0 = document.getElementById('edit-opt-0').value.trim();
+            const o1 = document.getElementById('edit-opt-1').value.trim();
+            const o2 = document.getElementById('edit-opt-2').value.trim();
+            const o3 = document.getElementById('edit-opt-3').value.trim();
+            const cIdx = parseInt(document.getElementById('edit-correct').value);
+            const exp = document.getElementById('edit-exp').value.trim();
+
+            if(!qText || !o0 || !o1 || !o2 || !o3) {
+                showAlert("කරුණාකර ප්‍රශ්නය සහ පිළිතුරු 4 ම සඳහා හිස්තැන් පුරවන්න!");
+                return;
+            }
+
+            questions[currentEditingIndex] = {
+                q: qText,
+                options: [o0, o1, o2, o3],
+                correct: cIdx,
+                explanation: exp
+            };
+
+            const spinner = document.getElementById('save-edit-spinner');
+            const btnText = document.getElementById('btn-save-edit');
+            spinner.classList.remove('hidden');
+            btnText.disabled = true;
+
+            try {
+                if(db && appId) {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'mcq_questions_grade5', 'default_set');
+                    await setDoc(docRef, { questionsList: questions });
+                }
+                
+                document.getElementById('edit-q-modal').classList.add('hidden');
+                renderEditList(); 
+                showAlert("ප්‍රශ්නය සහ පිළිතුරු සාර්ථකව සුරැකින ලදී!", true);
+                
+            } catch (err) {
+                console.error(err);
+                showAlert("වෙනස්කම් සුරැකීමේදී දෝෂයක් ඇතිවිය. අන්තර්ජාලය පරීක්ෂා කරන්න.");
+            } finally {
+                spinner.classList.add('hidden');
+                btnText.disabled = false;
+            }
+        });
+
+    </script>
+</body>
+</html>
